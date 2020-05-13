@@ -1,0 +1,50 @@
+<project name="wall-j">
+
+	<path id="myclasspath">
+		<fileset dir="./lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+    <!-- Cleaner for current project -->
+    <target name="clean">
+    	<delete dir="./classes/fr"/>
+    	<delete dir="./docs/doc"/>
+    	<delete dir="jar"/>
+    </target>
+
+    <!-- Compile for current project -->
+    <target name="compile">
+        <mkdir dir="classes"/>
+        <javac srcdir="src" destdir="classes">
+        	<classpath>
+        		<fileset dir="lib">
+        			<include name="zen5.jar"/>
+        			<include name="jbox2d-library-2.2.1.1.jar"/>
+        		</fileset>
+        	</classpath>
+        </javac>
+    </target>
+
+    <!-- Generate jar for current project -->
+    <target name="jar" depends="compile">
+        <jar destfile="wallj.jar" basedir="classes">
+       		<zipgroupfileset dir="lib" includes="zen5.jar"/>
+        	<zipgroupfileset dir="lib" includes="jbox2d-library-2.2.1.1.jar"/>
+        	<manifest>
+        		<attribute name="Main-Class" value="fr.umlv.projet.objectAndAStar.Area"/>
+        	</manifest>
+        </jar>
+    </target>
+	
+    <!-- Generate javadocs for current project -->
+    <target name="javadoc">
+        <mkdir dir="docs/doc"/>
+        <javadoc sourcepath="./src" destdir="./docs/doc" classpathref="myclasspath">
+            <fileset dir="src" defaultexcludes="yes">
+                <include name="**"/>
+            </fileset>
+        </javadoc>
+    </target>
+
+</project>
